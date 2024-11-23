@@ -1,0 +1,72 @@
+/* Reset some default styles */
+body, html, a {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* Body styling */
+body {
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+/* Header Image */
+#icon {
+    max-width: 200px;
+    margin: 20px 0;
+}
+
+/* Download Button Style */
+.download-button {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 20px 0;
+    background-color: #008CBA;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+.download-button:hover {
+    background-color: #005f74;
+}
+
+/* Archive Link */
+.archive-link {
+    color: #008CBA;
+    text-decoration: underline;
+    display: block;
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #eaeaea;
+    font-size: 14px;
+    color: #666;
+    position: absolute;
+    bottom: 0%;
+}
+
+footer a {
+    color: #333;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #008CBA;
+    text-decoration: underline;
+}
