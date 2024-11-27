@@ -21,7 +21,7 @@ def index():
         }
         
         artifacts_response = requests.get(
-            "https://api.github.com/repos/sram69/aseprite-bin/actions/artifacts",
+            "https://api.github.com/repos/sram69/aseprite-bin/actions/artifacts?name=aseprite",
             headers=headers
         )
         
@@ -33,9 +33,8 @@ def index():
             return "No artifacts found", 404
             
         artifact = artifacts["artifacts"][0]
-        artifact_id = artifact["id"]
         
-        download_url = f"https://api.github.com/repos/sram69/aseprite-bin/actions/artifacts/{artifact_id}/zip"
+        download_url = artifact["archive_download_url"]
         download_response = requests.get(
             download_url,
             headers=headers,
