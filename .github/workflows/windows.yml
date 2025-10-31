@@ -6,7 +6,7 @@ on:
   schedule:
     - cron: "0 0 * * *"
   push:
-    paths: [".github/workflows/windows.yml", "windows_build.sh"]
+    paths: [".github/workflows/windows.yml", "windows_build.cmd"]
 
 jobs:
   build:
