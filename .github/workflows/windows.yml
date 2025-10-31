@@ -15,6 +15,10 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0            # ensure full history (useful for submodules)
+          submodules: recursive     # checkout submodules recursively
+          lfs: true                 # pull Git LFS files
 
       - name: Build
         id: build
