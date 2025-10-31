@@ -1,11 +1,11 @@
-name: Windows build
+name: Specific version build
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * *"
-  push:
-    paths: [".github/workflows/windows.yml", "windows_build.cmd"]
+    inputs:
+      version:
+        description: "Version to build"
+        required: true
 
 jobs:
   build:
@@ -29,6 +29,6 @@ jobs:
       - name: Archive
         uses: actions/upload-artifact@v4
         with:
-          name: aseprite
+          name: aseprite-${{ steps.build.outputs.ASEPRITE_VERSION }}
           path: github
           if-no-files-found: error
