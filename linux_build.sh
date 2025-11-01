@@ -72,7 +72,7 @@ mkdir -p "${WORKDIR}/aseprite/build"
 cd "${WORKDIR}/aseprite/build"
 
 cmake \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_BUILD_TYPE=Release \
   -DLAF_BACKEND=skia \
   -DSKIA_DIR="${SKIA_DIR}" \
   -DSKIA_LIBRARY_DIR="${SKIA_DIR}/out/Release-x64" \
