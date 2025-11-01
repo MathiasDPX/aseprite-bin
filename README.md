@@ -1,1 +1,1 @@
-[Aseprite](https://github.com/aseprite/aseprite) binary build for 64-bit Windows.
+[Aseprite](https://github.com/aseprite/aseprite) binary build for Windows and Linux.

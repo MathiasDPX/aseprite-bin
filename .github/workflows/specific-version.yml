@@ -8,16 +8,15 @@ on:
         required: true
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-2022
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0            # ensure full history (useful for submodules)
-          submodules: recursive     # checkout submodules recursively
-          lfs: true                 # pull Git LFS files
+          fetch-depth: 0
+          submodules: recursive
+          lfs: true
 
       - name: Build
         id: build
@@ -30,5 +29,32 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: aseprite-${{ steps.build.outputs.ASEPRITE_VERSION }}
+          path: github
+          if-no-files-found: error
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+          lfs: true
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ clang git unzip curl build-essential cmake ninja-build libx11-dev libxcursor-dev libxi-dev libgl1-mesa-dev libfontconfig1-dev libfreetype6-dev libharfbuzz-dev libpng-dev zlib1g-dev libjpeg-dev libwebp-dev libxrandr-dev
+
+      - name: Run build script
+        run: |
+          chmod +x ./linux_build.sh
+          ./linux_build.sh
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: aseprite-linux
           path: github
           if-no-files-found: error
