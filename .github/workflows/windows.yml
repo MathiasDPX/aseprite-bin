@@ -29,6 +29,6 @@ jobs:
       - name: Archive
         uses: actions/upload-artifact@v4
         with:
-          name: aseprite
+          name: aseprite-windows
           path: github
           if-no-files-found: error
