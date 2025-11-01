@@ -1,4 +1,3 @@
-/* Reset some default styles */
 body, html, a {
     margin: 0;
     padding: 0;
@@ -7,7 +6,6 @@ body, html, a {
     text-align: center;
 }
 
-/* Body styling */
 body {
     background-color: #f4f4f4;
     display: flex;
@@ -18,38 +16,34 @@ body {
     color: #333;
 }
 
-/* Header Image */
 #icon {
     max-width: 200px;
     margin: 20px 0;
 }
 
-/* Download Button Style */
 .download-button {
     display: inline-block;
     padding: 15px 30px;
-    margin: 20px 0;
     background-color: #008CBA;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     font-size: 18px;
     transition: background-color 0.3s;
+    margin-top: 10px;
 }
 
-/* Button hover effect */
 .download-button:hover {
     background-color: #005f74;
 }
 
-/* Archive Link */
 .archive-link {
+    margin-top: 15px;
     color: #008CBA;
     text-decoration: underline;
     display: block;
 }
 
-/* Footer */
 footer {
     width: 100%;
     text-align: center;
