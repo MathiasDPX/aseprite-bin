@@ -3,17 +3,11 @@
 # Fail on errors
 set -e
 
-# Accept ASEPRITE_VERSION from env; if empty, detect latest release tag via GitHub API
-if [ -z "${ASEPRITE_VERSION:-}" ]; then
-  echo "Detecting latest Aseprite release tag from GitHub..."
-  ASEPRITE_VERSION=$(curl -s https://api.github.com/repos/aseprite/aseprite/releases/latest \
-    | grep -Po '"tag_name":\s*"\K[^"]+' || true)
-  if [ -z "$ASEPRITE_VERSION" ]; then
-    echo "Warning: could not detect latest release, falling back to v1.3.15.2"
-    ASEPRITE_VERSION="v1.3.15.2"
-  fi
-else
+# Accept ASEPRITE_VERSION from env; if empty, will be detected after cloning/updating the repo
+if [ -n "${ASEPRITE_VERSION:-}" ]; then
   echo "Using ASEPRITE_VERSION from environment: $ASEPRITE_VERSION"
+else
+  echo "ASEPRITE_VERSION not set; will detect latest tag from the aseprite repository after cloning/updating."
 fi
 
 # Working in current repo workspace
@@ -22,7 +16,7 @@ echo "Workspace: ${WORKDIR}"
 
 # Clone or update aseprite
 if [ ! -d "${WORKDIR}/aseprite" ]; then
-  echo "Cloning Aseprite ${ASEPRITE_VERSION}"
+  echo "Cloning Aseprite"
   git clone --recursive https://github.com/aseprite/aseprite.git "${WORKDIR}/aseprite"
 else
   echo "Updating local aseprite"
@@ -30,6 +24,13 @@ else
   git fetch --tags origin
   cd "${WORKDIR}"
 fi
+
+if [ -z "${ASEPRITE_VERSION:-}" ]; then
+  echo "Detecting latest tag from local aseprite repository..."
+  git -C "${WORKDIR}/aseprite" fetch --tags --quiet || true
+  ASEPRITE_VERSION=$(git -C "${WORKDIR}/aseprite" tag --sort=creatordate | tail -n1 || true)
+fi
+echo "Building aseprite $ASEPRITE_VERSION"
 
 # Checkout requested tag/commit
 cd "${WORKDIR}/aseprite"
