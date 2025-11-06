@@ -3,6 +3,30 @@
 # Fail on errors
 set -e
 
+# Install dependencies
+sudo apt-get update
+sudo apt-get install -y \
+  g++ \
+  clang \
+  git \
+  unzip \
+  curl \
+  build-essential \
+  cmake \
+  ninja-build \
+  libx11-dev \
+  libxcursor-dev \
+  libxi-dev \
+  libgl1-mesa-dev \
+  libfontconfig1-dev \
+  libfreetype6-dev \
+  libharfbuzz-dev \
+  libpng-dev \
+  zlib1g-dev \
+  libjpeg-dev \
+  libwebp-dev \
+  libxrandr-dev
+
 # Accept ASEPRITE_VERSION from env; if empty, will be detected after cloning/updating the repo
 if [ -n "${ASEPRITE_VERSION:-}" ]; then
   echo "Using ASEPRITE_VERSION from environment: $ASEPRITE_VERSION"
