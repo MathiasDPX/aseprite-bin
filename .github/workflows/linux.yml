@@ -4,8 +4,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * *"
-  push:
-    paths: [".github/workflows/linux.yml", "linux_build.sh"]
 
 jobs:
   build:
@@ -16,12 +14,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run build script
+      - name: Build
         run: |
           chmod +x ./linux_build.sh
           ./linux_build.sh
 
-      - name: Upload build artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: aseprite-linux
