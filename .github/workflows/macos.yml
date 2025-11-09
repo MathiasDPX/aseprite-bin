@@ -1,0 +1,29 @@
+name: macOS build
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+  push:
+    paths: [".github/workflows/macos.yml", "macos_build.sh"]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build
+        run: |
+          chmod +x ./macos_build.sh
+          ./macos_build.sh
+
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: aseprite-macos
+          path: github
+          if-no-files-found: error
