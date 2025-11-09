@@ -3,6 +3,7 @@ set -euo pipefail
 
 APP_NAME="Aseprite.app"
 ASE_DIR="${PWD}/aseprite-work"
+REPO_ROOT="${PWD}"
 # =======================
 
 # Optional ASEPRITE_VERSION override
@@ -108,30 +109,10 @@ if [ -f "${ICU_DATA}" ]; then
   cp "${ICU_DATA}" "${OUTDIR}/"
 fi
 
-mkdir -p github
-mv "${OUTDIR}" github/
-echo "Packaged artifact: github/aseprite-${ASEPRITE_VERSION}"
+mkdir -p "${REPO_ROOT}/github"
+mv "${OUTDIR}" "${REPO_ROOT}/github/"
+echo "Packaged artifact: ${REPO_ROOT}/github/aseprite-${ASEPRITE_VERSION}"
 # Expose version
 echo "ASEPRITE_VERSION=${ASEPRITE_VERSION}" >> "${GITHUB_OUTPUT:-/dev/null}" || true
 echo "=== Build complete ==="
-exit 0
-
-echo "=== 7) Copy built app to /Applications ==="
-if [ -d "${BIN_DIR}/${APP_NAME}" ]; then
-  echo "Copying ${APP_NAME} to /Applications/"
-  sudo cp -R "${BIN_DIR}/${APP_NAME}" /Applications/
-  echo "Done. You may now run it from /Applications/${APP_NAME}"
-else
-  echo "Error: built app not found at ${BIN_DIR}/${APP_NAME}"
-  exit 1
-fi
-
-echo "=== 8) Post-build: bundle icu data (optional) ==="
-ICU_DATA="${SKIA_DEST}/third_party/externals/icu/flutter/icudtl.dat"
-if [ -f "${ICU_DATA}" ]; then
-  echo "Copying icudtl.dat to application resources..."
-  sudo cp "${ICU_DATA}" "/Applications/${APP_NAME}/Contents/MacOS/"
-fi
-
-echo "=== Build & installation complete ==="
 exit 0
