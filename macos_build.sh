@@ -1,20 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# === CONFIGURE THESE (can be overridden by env) ===
-ASE_DIR="${ASE_DIR:-$HOME/src/aseprite}"
 APP_NAME="Aseprite.app"
-# In CI use a workspace-local directory to simplify artifact collection
-if [ -n "${GITHUB_WORKFLOW:-}" ]; then
-  ASE_DIR="${PWD}/aseprite-work"
-  echo "CI detected, using ASE_DIR=${ASE_DIR}"
-fi
+ASE_DIR="${PWD}/aseprite-work"
 # =======================
 
-CI_MODE=false
-[ -n "${GITHUB_WORKFLOW:-}" ] && CI_MODE=true
-
-# Optional ASEPRITE_VERSION override (like linux script)
+# Optional ASEPRITE_VERSION override
 if [ -n "${ASEPRITE_VERSION:-}" ]; then
   echo "Using ASEPRITE_VERSION from environment: ${ASEPRITE_VERSION}"
 fi
@@ -41,15 +32,20 @@ else
   cd ..
 fi
 
+echo "=== 3.4) Determine Aseprite version tag ==="
+if [ -z "${ASEPRITE_VERSION:-}" ]; then
+  echo "Detecting latest tag from local aseprite repository..."
+  git -C aseprite fetch --tags --quiet || true
+  ASEPRITE_VERSION=$(git -C aseprite tag --sort=creatordate | tail -n1 || echo "unknown")
+fi
+echo "Building aseprite ${ASEPRITE_VERSION}"
+
 echo "=== 3.5) Detect Skia version ==="
 if [ -f "aseprite/laf/misc/skia-tag.txt" ]; then
   SKIA_TAG=$(cat aseprite/laf/misc/skia-tag.txt)
   echo "Detected Skia version from skia-tag.txt: ${SKIA_TAG}"
 else
   echo "skia-tag.txt not found, detecting from Aseprite version..."
-  cd aseprite
-  ASEPRITE_VERSION="${ASEPRITE_VERSION:-$(git describe --tags --abbrev=0 2>/dev/null || echo "unknown")}"
-  cd ..
   if [[ "${ASEPRITE_VERSION}" == *beta* ]]; then
     SKIA_TAG="m124-08a5439a6b"
   else
@@ -93,33 +89,32 @@ ninja aseprite
 
 BIN_DIR="${ASE_DIR}/aseprite/${BUILD_DIR}/bin"
 
-if $CI_MODE; then
-  echo "=== CI mode: packaging artifact instead of installing to /Applications ==="
-  OUTDIR="${ASE_DIR}/aseprite-${ASEPRITE_VERSION}"
-  rm -rf "${OUTDIR}"
-  mkdir -p "${OUTDIR}"
-  if [ -d "${BIN_DIR}/${APP_NAME}" ]; then
-    cp -R "${BIN_DIR}/${APP_NAME}" "${OUTDIR}/"
-  else
-    echo "Error: built app not found for packaging"
-    exit 1
-  fi
-  cp -R "${ASE_DIR}/aseprite/docs" "${OUTDIR}/docs" 2>/dev/null || true
-  # Minimal portable marker
-  echo "# Portable marker" > "${OUTDIR}/aseprite.ini"
-  # ICU data (optional)
-  ICU_DATA="${SKIA_DEST}/third_party/externals/icu/flutter/icudtl.dat"
-  if [ -f "${ICU_DATA}" ]; then
-    cp "${ICU_DATA}" "${OUTDIR}/"
-  fi
-  mkdir -p github
-  mv "${OUTDIR}" github/
-  echo "Packaged artifact: github/aseprite-${ASEPRITE_VERSION}"
-  # Expose version
-  echo "ASEPRITE_VERSION=${ASEPRITE_VERSION}" >> "${GITHUB_OUTPUT:-/dev/null}" || true
-  echo "=== CI build complete ==="
-  exit 0
+echo "=== Packaging artifact ==="
+OUTDIR="${ASE_DIR}/aseprite-${ASEPRITE_VERSION}"
+rm -rf "${OUTDIR}"
+mkdir -p "${OUTDIR}"
+if [ -d "${BIN_DIR}/${APP_NAME}" ]; then
+  cp -R "${BIN_DIR}/${APP_NAME}" "${OUTDIR}/"
+else
+  echo "Error: built app not found for packaging"
+  exit 1
 fi
+cp -R "${ASE_DIR}/aseprite/docs" "${OUTDIR}/docs" 2>/dev/null || true
+# Minimal portable marker
+echo "# Portable marker" > "${OUTDIR}/aseprite.ini"
+# ICU data (optional)
+ICU_DATA="${SKIA_DEST}/third_party/externals/icu/flutter/icudtl.dat"
+if [ -f "${ICU_DATA}" ]; then
+  cp "${ICU_DATA}" "${OUTDIR}/"
+fi
+
+mkdir -p github
+mv "${OUTDIR}" github/
+echo "Packaged artifact: github/aseprite-${ASEPRITE_VERSION}"
+# Expose version
+echo "ASEPRITE_VERSION=${ASEPRITE_VERSION}" >> "${GITHUB_OUTPUT:-/dev/null}" || true
+echo "=== Build complete ==="
+exit 0
 
 echo "=== 7) Copy built app to /Applications ==="
 if [ -d "${BIN_DIR}/${APP_NAME}" ]; then
