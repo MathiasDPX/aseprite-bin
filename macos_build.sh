@@ -16,7 +16,18 @@ if ! command -v brew >/dev/null 2>&1; then
   echo "Homebrew not found. Please install Homebrew first."
   exit 1
 fi
-brew install cmake ninja
+
+if brew list --versions cmake >/dev/null 2>&1; then
+  echo "cmake is already installed and up-to-date."
+else
+  brew install cmake
+fi
+
+if brew list --versions ninja >/dev/null 2>&1; then
+  echo "ninja is already installed and up-to-date."
+else
+  brew install ninja
+fi
 
 echo "=== 2) Create directory structure ==="
 mkdir -p "${ASE_DIR}"
