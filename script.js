@@ -57,21 +57,24 @@ async function updateBuildTimes() {
                 const buildDate = new Date(latestRuns[displayName].updated_at);
                 const relativeTime = getRelativeTimeString(buildDate);
                 
+                fullDate = buildDate.toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
                 let formattedDate;
                 if (relativeTime) {
                     // use relative time
                     formattedDate = relativeTime;
                 } else {
-                    // use absolute date
-                    formattedDate = buildDate.toLocaleString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
+                    formattedDate = fullDate;
                 }
+
                 element.textContent = `Last build: ${formattedDate}`;
+                element.title = fullDate;
             }
         });
     } catch (error) {
