@@ -1,66 +1,217 @@
-body, html, a {
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
-    text-align: center;
 }
 
 body {
-    background-color: #f4f4f4;
+    background-color: #151519;
+    color: #8B8B9C;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    height: 100dvh;
-    color: #333;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
 }
 
 #icon {
-    max-width: 200px;
-    margin: 20px 0;
+    height: 120px;
+    width: auto;
 }
 
-.download-button {
-    display: inline-block;
-    padding: 15px 30px;
-    background-color: #008CBA;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 18px;
-    transition: background-color 0.3s;
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 80px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Cards */
+.card {
+    background-color: #1a1a1e;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.card-title {
+    color: #8B8B9C;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+/* Server Stats */
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.stat-label {
+    color: #8B8B9C;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    color: #D9C38C;
+    font-size: 13px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: #2a2a2e;
+    border-radius: 3px;
+    overflow: hidden;
     margin-top: 10px;
 }
 
-.download-button:hover {
-    background-color: #005f74;
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #D9C38C, #8B8B9C);
+    border-radius: 3px;
 }
 
-.archive-link {
-    margin-top: 15px;
-    color: #008CBA;
-    text-decoration: underline;
-    display: block;
+.download-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #2a2a2e;
 }
 
-footer {
+.download-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #2a2a2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.download-info {
+    flex: 1;
+}
+
+.download-name {
+    color: #D9C38C;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.download-status {
+    color: #8B8B9C;
+    font-size: 11px;
+}
+
+/* Buttons */
+.download-button {
+    display: inline-block;
+    background-color: #2a2a2e;
+    color: #D9C38C;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    border: 1px solid #3a3a3e;
     width: 100%;
     text-align: center;
-    padding: 10px 0;
-    background-color: #eaeaea;
-    font-size: 14px;
-    color: #666;
-    position: absolute;
-    bottom: 0%;
+    margin-bottom: 10px;
+}
+
+.download-button:hover {
+    background-color: #D9C38C;
+    color: #151519;
+    border-color: #D9C38C;
+}
+
+.build-date {
+    color: #8B8B9C;
+    font-size: 11px;
+    text-align: center;
+    margin-top: 10px;
+    opacity: 0.7;
+}
+
+.archives-button {
+    display: block;
+    background-color: transparent;
+    color: #8B8B9C;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid #2a2a2e;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.archives-button:hover {
+    border-color: #D9C38C;
+    color: #D9C38C;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: auto;
+    padding-top: 30px;
+    border-top: 1px solid #2a2a2e;
+    width: 100%;
 }
 
 footer a {
-    color: #333;
+    color: #8B8B9C;
     text-decoration: none;
+    font-size: 12px;
+    transition: color 0.3s ease;
 }
 
 footer a:hover {
-    color: #008CBA;
-    text-decoration: underline;
+    color: #D9C38C;
+}
+
+.archive-link {
+    color: #8B8B9C;
+    text-decoration: none;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+.archive-link:hover {
+    color: #D9C38C;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
 }

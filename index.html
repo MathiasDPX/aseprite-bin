@@ -1,21 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>aseprite-bin</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <img id="icon" src="aseprite-logo.png" alt="Aseprite Logo">
-    <a href="https://nightly.link/MathiasDPX/aseprite-bin/workflows/windows/master/aseprite-windows.zip" class="download-button">Download for Windows</a>
-    <a href="https://nightly.link/MathiasDPX/aseprite-bin/workflows/linux/master/aseprite-linux.zip" class="download-button">Download for Linux</a>
-    <a href="https://nightly.link/MathiasDPX/aseprite-bin/workflows/macos/master/aseprite-macos.zip" onclick="macos_alert()" class="download-button">Download for MacOS</a>
-    <a href="https://github.com/MathiasDPX/aseprite-bin/actions?query=branch%3Amaster%20event%3Aschedule" class="archive-link">See archives</a>
+    <div class="container">
+        <header>
+            <img id="icon" src="https://upload.wikimedia.org/wikipedia/commons/6/69/Logo_Aseprite.svg" alt="Aseprite Logo">
+        </header>
+        <div class="dashboard-grid">
+
+            <!-- Windows -->
+            <div class="card">
+                <h2 class="card-title">Windows Build</h2>
+                <div class="download-item">
+                    <div class="download-icon">🪟</div>
+                    <div class="download-info">
+                        <div class="download-name">Windows</div>
+                        <div class="download-status"><!-- Will be used later for indicating version --></div>
+                    </div>
+                </div>
+                <a href="https://nightly.link/MathiasDPX/aseprite-bin/workflows/windows/master/aseprite-windows.zip"
+                    class="download-button">Download for Windows</a>
+                <a href="https://github.com/MathiasDPX/aseprite-bin/actions/workflows/windows.yml?query=is%3Asuccess"
+                    class="archives-button"
+                    target="_blank">View Archives →</a>
+                <div class="build-date" id="windows-build-time">Last build: unknown</div>
+            </div>
+
+            <!-- Linux -->
+            <div class="card">
+                <h2 class="card-title">Linux Build</h2>
+                <div class="download-item">
+                    <div class="download-icon">🐧</div>
+                    <div class="download-info">
+                        <div class="download-name">Linux</div>
+                        <div class="download-status"></div>
+                    </div>
+                </div>
+                <a href="https://nightly.link/MathiasDPX/aseprite-bin/workflows/linux/master/aseprite-linux.zip"
+                    class="download-button">Download for Linux</a>
+                <a href="https://github.com/MathiasDPX/aseprite-bin/actions/workflows/linux.yml?query=is%3Asuccess"
+                    class="archives-button"
+                    target="_blank">View Archives →</a>
+                <div class="build-date" id="linux-build-time">Last build: unknown</div>
+            </div>
+
+            <!-- macOS -->
+            <div class="card">
+                <h2 class="card-title">macOS Build</h2>
+                <div class="download-item">
+                    <div class="download-icon">🍎</div>
+                    <div class="download-info">
+                        <div class="download-name">macOS</div>
+                        <div class="download-status"></div>
+                    </div>
+                </div>
+                <a href="https://nightly.link/MathiasDPX/aseprite-bin/workflows/macos/master/aseprite-macos.zip"
+                    onclick="macos_alert()" class="download-button">Download for macOS</a>
+                <a href="https://github.com/MathiasDPX/aseprite-bin/actions/workflows/macos.yml?query=is%3Asuccess"
+                    class="archives-button"
+                    target="_blank">View Archives →</a>
+                <div class="build-date" id="macos-build-time">Last build: unknown</div>
+            </div>
+        </div>
+        <footer>
+            <a href="https://github.com/MathiasDPX/aseprite-bin" target="_blank">Open-source on GitHub</a>
+        </footer>
+    </div>
+    <script src="script.js"></script>
 </body>
-<footer>
-    <a href="https://github.com/MathiasDPX/aseprite-bin" target="_blank">Open-source on GitHub</a>
-</footer>
-<script src="script.js"></script>
+
 </html>
