@@ -15,7 +15,6 @@
             <img id="icon" src="https://upload.wikimedia.org/wikipedia/commons/6/69/Logo_Aseprite.svg" alt="Aseprite Logo">
         </header>
         <div class="dashboard-grid">
-
             <!-- Windows -->
             <div class="card">
                 <h2 class="card-title">Windows Build</h2>
@@ -68,6 +67,21 @@
                     class="archives-button"
                     target="_blank">View Archives →</a>
                 <div class="build-date" id="macos-build-time">Last build: unknown</div>
+            </div>
+        </div>
+        <div class="specific-version card">
+            <h2 class="card-title">Specific versions</h2>
+            <div class="content">
+                <div class="version-controls">
+                    <div class="select-wrapper">
+                        <select id="version-select" aria-label="Select version"></select>
+                    </div>
+                    <button id="build-button" class="build-button">Build</button>
+                </div>
+
+                <div>
+                    <ul id="versions-list" class="versions-list"></ul>
+                </div>
             </div>
         </div>
         <footer>

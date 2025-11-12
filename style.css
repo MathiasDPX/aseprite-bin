@@ -35,10 +35,153 @@ header {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    margin-bottom: 80px;
+    margin-bottom: 30px;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+}
+
+ul {
+    list-style-type: none;
+    min-height: 100px;
+}
+
+select {
+    border-radius: 6px;
+    background-color: transparent;
+    border: 1px solid #2a2a2e;
+    color: #8B8B9C;
+    padding: 12px 32px 12px 12px;
+    font-size: 0.9em;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+    max-width: 40%;
+}
+
+.select-wrapper::after {
+    content: '>';
+    font-weight: bold;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg); 
+    color: #8B8B9C;
+    pointer-events: none;
+    font-size: 0.9em;
+}
+
+.select-wrapper select {
+    border-radius: 6px;
+    background-color: transparent;
+    border: 1px solid #2a2a2e;
+    color: #8B8B9C;
+    padding: 12px 32px 12px 12px;
+    font-size: 0.9em;
+    appearance: none;
+    width: 100%;
+    cursor: pointer;
+}
+
+.specific-version {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 80px;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.version-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Make the select wrapper and build button share the same width */
+.select-wrapper,
+.build-button {
+    width: 220px;
+    max-width: 100%;
+}
+
+.version-controls {
+    align-items: flex-start; /* keep both left-aligned */
+}
+
+.build-button {
+    background-color: #D9C38C;
+    color: #151519;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity 0.15s ease;
+    max-width: 220px;
+}
+
+.build-button:hover {
+    opacity: 0.9;
+}
+
+.versions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: -6%;
+    max-height: 140px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.versions-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.versions-list a.version-link {
+    color: #D9C38C;
+    text-decoration: none;
+}
+
+.versions-list .status {
+    font-size: 12px;
+    color: #8B8B9C;
+}
+
+.version-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.version-date {
+    color: #7a7a7a;
+    font-size: 10px;
+    opacity: 0.5;
+}
+
+.version-status {
+    color: #DD612B;
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+
+li:not(:last-child) {
+    padding-bottom: 0.25em;
 }
 
 /* Cards */
@@ -55,40 +198,6 @@ header {
     letter-spacing: 2px;
     margin-bottom: 10px;
     font-weight: normal;
-}
-
-/* Server Stats */
-.stats-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.stat-label {
-    color: #8B8B9C;
-    font-size: 11px;
-    text-transform: uppercase;
-}
-
-.stat-value {
-    color: #D9C38C;
-    font-size: 13px;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 6px;
-    background-color: #2a2a2e;
-    border-radius: 3px;
-    overflow: hidden;
-    margin-top: 10px;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #D9C38C, #8B8B9C);
-    border-radius: 3px;
 }
 
 .download-item {
@@ -194,24 +303,22 @@ footer a:hover {
     color: #D9C38C;
 }
 
-.archive-link {
-    color: #8B8B9C;
-    text-decoration: none;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    display: inline-block;
-    margin-top: 10px;
-    transition: color 0.3s ease;
-}
-
-.archive-link:hover {
-    color: #D9C38C;
-}
-
 /* Responsive */
 @media (max-width: 1024px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+    .select-wrapper {
+        max-width: 100%;
+    }
+    .select-wrapper,
+    .build-button {
+        width: 100%;
     }
 }
