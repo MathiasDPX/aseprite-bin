@@ -303,6 +303,12 @@ footer a:hover {
     color: #D9C38C;
 }
 
+/* Slightly lower the bullet separator in the footer */
+footer label {
+    position: relative;
+    top: 0.05em;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .dashboard-grid {
